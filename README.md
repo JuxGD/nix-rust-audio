@@ -8,6 +8,8 @@ This repo only provides `rustc`, `cargo`, some conveniences like `~/.cargo/bin` 
 
 Supposedly,
 
+- `.envrc` using the included `flake.nix` (requires flakes to be enabled) (linux only, afaik)
+- Works with `nix develop` (with flakes enabled) and `nix-shell` (flakes feature not needed)
 - Rust Nightly
 - `rustc` + `cargo`
 - Compilation targets: `x86_64-pc-windows-gnu`, `x86_64-unknown-linux-gnu`
@@ -20,11 +22,16 @@ Supposedly,
 
 This "flake"/shell/environment is not meant to be imported. Instead:
 
-1. `git clone https://codeberg.org/JuxGD/nix-rust-audio`, then `cd nix-rust-audio`, and copy-paste all files except for `README.md` to wherever.
-2. Maybe remove needed packages in `shell.nix`, as this repo has ALL of them (or add packages, and if you do pls open a pull request :3 check [Contributing](#Contributing))
-3. Do `direnv allow` with direnv installed to automatically apply the environment (keeps the shell), or just `nix develop` or `nix-shell` to enter it manually (these usually change the shell to `bash`).
-  - `direnv allow` and `nix develop` require flakes to be enabled.
-4. ***It's Rustin' Time.***
+1. `cd <project-name>` (do `mkdir <project-name>` first, if the project directory doesn't exist yet)
+2. Do `curl -s https://codeberg.org/JuxGD/nix-rust-audio/raw/branch/main/download.sh | bash` for projects using direnv, `curl -s https://codeberg.org/JuxGD/nix-rust-audio/raw/branch/main/download-no-direnv.sh | bash` for projects that already have `.envrc` or projects where an `.envrc` isn't wanted. These commands will run the `download.sh` or `download-no-direnv.sh` files, respectiely, on your current working directory. These commands only work on Linux. You can do the corresponding command in Windows, or just individually download the files specified in the scripts.
+3. For projects that already have an `.envrc`, add a line to `.envrc` with the contents `use flake`
+4. If the project is a git repository, do `git add` and `git commit -m "add nix stuff"` or some other commit message.
+5. Maybe remove needed packages in `shell.nix`, as this repo has ALL of them (or add packages, and if you do pls open a pull request :3 check [Contributing](#Contributing))
+6. Do `direnv reload`, `nix-shell` or `nix develop`
+7. ***It's Rustin' Time.***
+
+> [!CAUTION]
+> ***Always check every shell script you `curl -s <url> | bash`. If you're not careful, you're at risk of being attacked.*** I won't do that though, but you can check my scripts by copy-pasting the links in the commands above into a browser tab's URL bar, or by downloading it with `curl` without running it. ***Even if you trust a script now, it's good to check if it's been updated every time you run it.*** Be careful!
 
 ## Contributing
 
